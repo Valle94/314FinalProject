@@ -11,15 +11,19 @@ public class SnapInteractableSpawner : MonoBehaviour
     [SerializeField] List<GameObject> startPieces;
     [SerializeField] List<GameObject> spawnedPieces;
     [SerializeField] List<Material> materials;
+    [SerializeField] GameObject playerOneButton;
+    [SerializeField] GameObject playerTwoButton;
+
     private Vector3 firstSpawnPos = new Vector3(-0.21f, 0.036f, -0.21f);
     private float spacing = 0.06f;
     private int gridSize = 8;
+    public bool piecesSpawned = false;
 
 
     void Start()
     {
         SpawnGrid();
-        StartCoroutine(SpawnPiecesAfterGrid());
+        // StartCoroutine(SpawnPiecesAfterGrid());
     }
 
     void SpawnGrid()
@@ -66,31 +70,40 @@ public class SnapInteractableSpawner : MonoBehaviour
         }
     }
 
+    public void SpawnPieces()
+    {
+        StartCoroutine(SpawnPiecesAfterGrid());
+    }
+
     IEnumerator SpawnPiecesAfterGrid()
     {
-        yield return null; // Wait one frame for grid to fully initialize
-
-        for (int i = 0; i < boardSquares.Count; i++)
+        if (!piecesSpawned)
         {
-            if (startPieces[i] != null)
+            yield return null; // Wait one frame for grid to fully initialize
+
+            for (int i = 0; i < boardSquares.Count; i++)
             {
-                // Spawn piece at EXACT socket position
-                GameObject newPiece = Instantiate(startPieces[i],
-                            boardSquares[i].transform.position,
-                            boardSquares[i].transform.rotation,
-                            this.transform);
-
-                if (i < boardSquares.Count / 2)
+                if (startPieces[i] != null)
                 {
-                    newPiece.GetComponentInChildren<MeshRenderer>().material = materials[0];
-                }
-                else
-                {
-                    newPiece.GetComponentInChildren<MeshRenderer>().material = materials[1];
-                }
+                    // Spawn piece at EXACT socket position
+                    GameObject newPiece = Instantiate(startPieces[i],
+                                boardSquares[i].transform.position,
+                                boardSquares[i].transform.rotation,
+                                this.transform);
 
-                spawnedPieces.Add(newPiece);
+                    if (i < boardSquares.Count / 2)
+                    {
+                        newPiece.GetComponentInChildren<MeshRenderer>().material = materials[0];
+                    }
+                    else
+                    {
+                        newPiece.GetComponentInChildren<MeshRenderer>().material = materials[1];
+                    }
+
+                    spawnedPieces.Add(newPiece);
+                }
             }
+            piecesSpawned = true;
         }
     }
 
@@ -100,5 +113,42 @@ public class SnapInteractableSpawner : MonoBehaviour
         {
             Destroy(piece);
         }
+        piecesSpawned = false;
+    }
+
+    public void RotateBoard()
+    {
+        // Important: Stop any existing rotation so they don't fight
+        StopAllCoroutines();
+
+        // Calculate a NEW target based on where we are now + 180 degrees
+        Quaternion target = transform.rotation * Quaternion.Euler(0, 180, 0);
+        StartCoroutine(RotateBoardCoroutine(target, 1f));
+    }
+
+    IEnumerator RotateBoardCoroutine(Quaternion targetRotation, float duration)
+    {
+        Vector3 buttonOnePos = playerOneButton.transform.position;
+        Vector3 buttonTwoPos = playerTwoButton.transform.position;
+
+        Quaternion startRotation = transform.rotation;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+
+            // Smoothly interpolate
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
+            playerOneButton.transform.position = Vector3.Slerp(buttonOnePos, buttonTwoPos, t);
+            playerTwoButton.transform.position = Vector3.Slerp(buttonTwoPos, buttonOnePos, t);
+
+            // PAUSE here and wait for the next frame to draw
+            yield return null;
+        }
+
+        // Snap to exact final value to clear any floating point errors
+        transform.rotation = targetRotation;
     }
 }
