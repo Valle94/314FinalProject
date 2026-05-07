@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SnapInteractableSpawner : MonoBehaviour
 {
@@ -13,18 +14,12 @@ public class SnapInteractableSpawner : MonoBehaviour
     [SerializeField] List<Material> materials;
     [SerializeField] GameObject playerOneButton;
     [SerializeField] GameObject playerTwoButton;
+    [SerializeField] GameObject rotateBoardButton;
 
     private Vector3 firstSpawnPos = new Vector3(-0.21f, 0.036f, -0.21f);
     private float spacing = 0.06f;
     private int gridSize = 8;
     public bool piecesSpawned = false;
-
-
-    void Start()
-    {
-        SpawnGrid();
-        // StartCoroutine(SpawnPiecesAfterGrid());
-    }
 
     void SpawnGrid()
     {
@@ -70,8 +65,10 @@ public class SnapInteractableSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnPieces()
+    public void SpawnGridAndPieces()
     {
+        DestroySquaresAndPieces();
+        SpawnGrid();
         StartCoroutine(SpawnPiecesAfterGrid());
     }
 
@@ -107,13 +104,20 @@ public class SnapInteractableSpawner : MonoBehaviour
         }
     }
 
-    public void DestroyPieces()
+    public void DestroySquaresAndPieces()
     {
         foreach (GameObject piece in spawnedPieces)
         {
-            Destroy(piece);
+            if (piece != null) Destroy(piece);
         }
+        spawnedPieces.Clear();
         piecesSpawned = false;
+
+        foreach (GameObject square in boardSquares)
+        {
+            if (square != null) Destroy(square);
+        }
+        boardSquares.Clear();
     }
 
     public void RotateBoard()
@@ -128,6 +132,8 @@ public class SnapInteractableSpawner : MonoBehaviour
 
     IEnumerator RotateBoardCoroutine(Quaternion targetRotation, float duration)
     {
+        Button rotateButton = rotateBoardButton.GetComponent<Button>();
+        rotateButton.interactable = false;
         Vector3 buttonOnePos = playerOneButton.transform.position;
         Vector3 buttonTwoPos = playerTwoButton.transform.position;
 
@@ -147,6 +153,8 @@ public class SnapInteractableSpawner : MonoBehaviour
             // PAUSE here and wait for the next frame to draw
             yield return null;
         }
+
+        rotateButton.interactable = true;
 
         // Snap to exact final value to clear any floating point errors
         transform.rotation = targetRotation;

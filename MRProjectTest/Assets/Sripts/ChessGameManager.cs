@@ -23,10 +23,13 @@ public class ChessGameManager : MonoBehaviour
 
     [SerializeField] Material redButton;
     [SerializeField] Material greenButton;
-    [SerializeField] SnapInteractableSpawner chessBoard;
-
+    [SerializeField] GameObject timerPanel;
     public double playerOneTime = 0;
     public double playerTwoTime = 0;
+
+    [Header("Other")]
+    [SerializeField] SnapInteractableSpawner chessBoard;
+
     private double increment = 3.0;
 
     private double startTime;
@@ -93,14 +96,22 @@ public class ChessGameManager : MonoBehaviour
         }
     }
 
+    public void SwitchTimers()
+    {
+        HorizontalLayoutGroup timers = timerPanel.GetComponent<HorizontalLayoutGroup>();
+        timers.reverseArrangement = !timers.reverseArrangement;
+    }
+
     public void ResetBoard()
     {
         StopClock();
         playerOneTime = playerTwoTime = startTime = (double)0;
         fivePlusOneButton.interactable = tenPlusOneButton.interactable = fifteenPlusOneButton.interactable = true;
-        playerOneButton.GetComponent<PokeInteractable>().enabled = playerTwoButton.GetComponent<PokeInteractable>().enabled = true;
-        playerOneButton.GetComponentInChildren<MeshRenderer>().material = playerTwoButton.GetComponentInChildren<MeshRenderer>().material = greenButton;
-        chessBoard.DestroyPieces();
+        playerOneButton.GetComponent<PokeInteractable>().enabled = true;
+        playerTwoButton.GetComponent<PokeInteractable>().enabled = true;
+        playerOneButton.GetComponentInChildren<MeshRenderer>().material = greenButton;
+        playerTwoButton.GetComponentInChildren<MeshRenderer>().material = greenButton;
+        chessBoard.DestroySquaresAndPieces();
     }
 
     public void SwitchClock()

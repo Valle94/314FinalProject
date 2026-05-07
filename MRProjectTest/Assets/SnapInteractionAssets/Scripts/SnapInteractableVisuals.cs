@@ -22,6 +22,24 @@ public class SnapInteractableVisuals : MonoBehaviour
         snapInteractable.WhenInteractorViewAdded += SnapInteractable_WhenInteractorViewAdded;
     }
 
+    private void OnDisable()
+{
+    // UNSUBSCRIBE - This is the missing piece
+    if (snapInteractable != null)
+    {
+        snapInteractable.WhenInteractorAdded.Action -= WhenInteractorAdded_Action;
+        snapInteractable.WhenSelectingInteractorViewAdded -= SnapInteractable_WhenSelectingInteractorViewAdded;
+        snapInteractable.WhenInteractorViewRemoved -= SnapInteractable_WhenInteractorViewRemoved;
+        snapInteractable.WhenInteractorViewAdded -= SnapInteractable_WhenInteractorViewAdded;
+    }
+    
+    // Cleanup any lingering ghost models when the square is reset/disabled
+    if (currentInteractorGameObject != null)
+    {
+        Destroy(currentInteractorGameObject);
+    }
+}
+
     private void WhenInteractorAdded_Action(SnapInteractor obj)
     {
         if (currentInteractor == null)
