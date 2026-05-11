@@ -22,7 +22,9 @@ Hover Visual Asset: https://dineshpunni.notion.site/Snap-Interaction-048c3668caa
 
 ## Video Link
 
-[![Watch the video](https://img.youtube.com/vi/<VIDEO_ID>/hqdefault.jpg)](https://drive.google.com/file/d/1iYvIOGcTiUjc4xRbR4oc_L-0k9A_jIJS/view?usp=sharing))
+
+[![Watch the video](https://drive.google.com/file/d/1iYvIOGcTiUjc4xRbR4oc_L-0k9A_jIJS/view?usp=drive_link)
+
 
 ## To-Do List/Known Limitations
 
