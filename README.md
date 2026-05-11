@@ -22,6 +22,8 @@ Hover Visual Asset: https://dineshpunni.notion.site/Snap-Interaction-048c3668caa
 
 ## Video Link
 
+([https://www.youtube.com/embed/APOPm01BVrk](https://drive.google.com/file/d/1iYvIOGcTiUjc4xRbR4oc_L-0k9A_jIJS/view?usp=sharing))
+
 ## To-Do List/Known Limitations
 
 Right now the only known bug is that the pieces don't spawn "snapped" into the board sockets. 
