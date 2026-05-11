@@ -16,15 +16,12 @@ There is currently no chess game logic built into the board. For example, pieces
 
 ## External Assets
 
-Project was built using Meta Quest Developer Hub and the built-in Meta Quest Unity Building Blocks. 
-Chess Board/Pieces Assets: https://assetstore.unity.com/packages/3d/props/low-poly-chess-set-board-and-timer-216547
-Hover Visual Asset: https://dineshpunni.notion.site/Snap-Interaction-048c3668caa34c91bce931cd4903f9e8
+Project was built using Meta Quest Developer Hub and the built-in Meta Quest Unity Building Blocks.  
+Chess Board/Pieces Assets: https://assetstore.unity.com/packages/3d/props/low-poly-chess-set-board-and-timer-216547  
+Hover Visual Asset: https://dineshpunni.notion.site/Snap-Interaction-048c3668caa34c91bce931cd4903f9e8  
 
 ## Video Link
-
-
-[![Watch the video](https://drive.google.com/file/d/1iYvIOGcTiUjc4xRbR4oc_L-0k9A_jIJS/view?usp=drive_link)
-
+![Watch the video](https://drive.google.com/file/d/1iYvIOGcTiUjc4xRbR4oc_L-0k9A_jIJS/view?usp=drive_link)
 
 ## To-Do List/Known Limitations
 
