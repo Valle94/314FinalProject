@@ -21,7 +21,7 @@ Chess Board/Pieces Assets: https://assetstore.unity.com/packages/3d/props/low-po
 Hover Visual Asset: https://dineshpunni.notion.site/Snap-Interaction-048c3668caa34c91bce931cd4903f9e8  
 
 ## Video Link
-![Watch the video](https://drive.google.com/file/d/1iYvIOGcTiUjc4xRbR4oc_L-0k9A_jIJS/view?usp=drive_link)
+![Watch the video]([https://drive.google.com/file/d/1iYvIOGcTiUjc4xRbR4oc_L-0k9A_jIJS/view?usp=drive_link](https://drive.google.com/file/d/1iYvIOGcTiUjc4xRbR4oc_L-0k9A_jIJS/view?usp=drive_link))
 
 ## To-Do List/Known Limitations
 
